@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Estudios Clínicos Oncológicos — La Voz de los Pacientes Chile</title>
+<meta name="description" content="Encuentra estudios clínicos oncológicos disponibles en Chile y postula con consentimiento informado digital.">
+<meta name="theme-color" content="#1f4a43">
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" href="./icons/icon-192.png">
+<link rel="apple-touch-icon" href="./icons/icon-192.png">
+<link rel="stylesheet" href="./css/estilos.css">
+</head>
+<body>
+
+<header class="app-header">
+  <div class="header-inner">
+    <a class="brand" href="./index.html">
+      <span class="mark">La Voz de los Pacientes</span>
+      <span class="tagline">Estudios clínicos</span>
+    </a>
+    <a class="btn btn-ghost" href="./admin.html" style="min-height:38px; padding:0.4rem 0.8rem; font-size:0.82rem;">Administración</a>
+  </div>
+</header>
+
+<main class="container">
+  <div id="install-banner" class="install-banner">
+    <span>Instala esta app en tu celular para acceder más rápido.</span>
+    <button id="btn-instalar" class="btn btn-primary" style="min-height:36px; padding:0.4rem 0.9rem; font-size:0.82rem;">Instalar</button>
+  </div>
+
+  <span class="eyebrow">Fundación La Voz de los Pacientes Chile</span>
+  <h1>Estudios clínicos oncológicos disponibles</h1>
+  <p class="lede">Busca por tipo de cáncer o ubicación. Al postular a un estudio te pediremos revisar y firmar un consentimiento informado.</p>
+
+  <form class="filters" id="filtros" autocomplete="off">
+    <div class="search-box">
+      <input type="search" id="buscar" placeholder="Buscar por nombre del estudio…" aria-label="Buscar estudio">
+    </div>
+    <div class="filter-row">
+      <div class="field">
+        <label for="filtro-cancer">Tipo de cáncer</label>
+        <select id="filtro-cancer">
+          <option value="">Todos</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="filtro-comuna">Comuna</label>
+        <select id="filtro-comuna">
+          <option value="">Todas</option>
+        </select>
+      </div>
+    </div>
+    <div class="field">
+      <label>Estado de reclutamiento</label>
+      <div class="chip-row" id="filtro-estado" role="group" aria-label="Filtrar por estado">
+        <button type="button" class="chip" data-estado="abierto" aria-pressed="true">Abierto</button>
+        <button type="button" class="chip" data-estado="pausado" aria-pressed="true">Pausado</button>
+        <button type="button" class="chip" data-estado="cerrado" aria-pressed="false">Cerrado</button>
+      </div>
+    </div>
+  </form>
+
+  <p class="result-count" id="contador-resultados"></p>
+  <div class="study-grid" id="grilla-estudios"></div>
+  <div class="empty-state" id="estado-vacio" hidden>
+    <p>No encontramos estudios con esos filtros.</p>
+  </div>
+</main>
+
+<footer class="app-footer">
+  Fundación La Voz de los Pacientes Chile — Portal de estudios clínicos (MVP)
+</footer>
+
+<div id="toast" class="toast"></div>
+
+<script src="./js/estudios.js"></script>
+<script src="./js/catalogo.js"></script>
+<script>
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("./sw.js").catch(() => {});
+    });
+  }
+  let deferredPrompt;
+  window.addEventListener("beforeinstallprompt", (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    document.getElementById("install-banner").classList.add("show");
+  });
+  document.getElementById("btn-instalar").addEventListener("click", async () => {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    await deferredPrompt.userChoice;
+    deferredPrompt = null;
+    document.getElementById("install-banner").classList.remove("show");
+  });
+</script>
+</body>
+</html>

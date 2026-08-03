@@ -1,0 +1,111 @@
+[
+  {
+    "id": "est-001",
+    "titulo": "Terapia dirigida en cáncer de mama HER2 positivo metastásico",
+    "tipoCancer": "Mama",
+    "fase": "Fase III",
+    "centro": "Clínica Inmunocel — La Voz de los Pacientes Chile",
+    "comuna": "Las Condes",
+    "estado": "abierto",
+    "patrocinador": "Grupo Oncológico Cooperativo Latinoamericano",
+    "descripcionBreve": "Evalúa una terapia dirigida anti-HER2 de segunda línea en pacientes con cáncer de mama metastásico HER2 positivo.",
+    "criterios": [
+      "Diagnóstico confirmado de cáncer de mama HER2 positivo",
+      "Enfermedad metastásica documentada por imágenes",
+      "Progresión luego de al menos una línea de tratamiento",
+      "Función cardíaca conservada (FEVI ≥ 50%)",
+      "18 años o más"
+    ],
+    "actualizado": "2026-07-28"
+  },
+  {
+    "id": "est-002",
+    "titulo": "Inmunoterapia de mantención en cáncer de pulmón no microcítico avanzado",
+    "tipoCancer": "Pulmón",
+    "fase": "Fase II",
+    "centro": "Instituto Oncológico Regional",
+    "comuna": "Providencia",
+    "estado": "abierto",
+    "patrocinador": "Consorcio Internacional de Oncología Torácica",
+    "descripcionBreve": "Estudio de mantención con inmunoterapia tras respuesta a quimioterapia de primera línea en cáncer de pulmón avanzado.",
+    "criterios": [
+      "Cáncer de pulmón no microcítico estadio IIIB–IV",
+      "Respuesta parcial o enfermedad estable tras 1ª línea",
+      "ECOG 0–1",
+      "Sin tratamiento previo con inmunoterapia"
+    ],
+    "actualizado": "2026-07-15"
+  },
+  {
+    "id": "est-003",
+    "titulo": "Nueva combinación hormonal en cáncer de próstata resistente a castración",
+    "tipoCancer": "Próstata",
+    "fase": "Fase III",
+    "centro": "Centro de Investigación Clínica Sur",
+    "comuna": "San Miguel",
+    "estado": "abierto",
+    "patrocinador": "Red de Ensayos Uro-Oncológicos Chile",
+    "descripcionBreve": "Compara una combinación hormonal de nueva generación frente al tratamiento estándar en cáncer de próstata resistente a castración.",
+    "criterios": [
+      "Cáncer de próstata metastásico resistente a castración",
+      "Niveles de testosterona en rango de castración",
+      "Sin quimioterapia previa para enfermedad metastásica",
+      "Función hepática y renal adecuadas"
+    ],
+    "actualizado": "2026-06-30"
+  },
+  {
+    "id": "est-004",
+    "titulo": "Terapia CAR-T en linfoma difuso de células B grandes en recaída",
+    "tipoCancer": "Linfoma",
+    "fase": "Fase I/II",
+    "centro": "Clínica Inmunocel — La Voz de los Pacientes Chile",
+    "comuna": "Las Condes",
+    "estado": "pausado",
+    "patrocinador": "Iniciativa Latinoamericana de Terapias Celulares",
+    "descripcionBreve": "Evalúa seguridad y eficacia de una terapia de células CAR-T en linfoma difuso de células B grandes refractario o en recaída.",
+    "criterios": [
+      "Linfoma difuso de células B grandes confirmado por biopsia",
+      "Recaída o refractariedad tras 2 líneas de tratamiento",
+      "Reserva medular adecuada",
+      "Sin compromiso activo del sistema nervioso central"
+    ],
+    "actualizado": "2026-07-02"
+  },
+  {
+    "id": "est-005",
+    "titulo": "Inhibidor de proteasoma de nueva generación en mieloma múltiple",
+    "tipoCancer": "Mieloma múltiple",
+    "fase": "Fase II",
+    "centro": "Instituto Oncológico Regional",
+    "comuna": "Providencia",
+    "estado": "abierto",
+    "patrocinador": "Grupo Oncológico Cooperativo Latinoamericano",
+    "descripcionBreve": "Estudia un inhibidor de proteasoma oral en pacientes con mieloma múltiple que recayeron tras trasplante autólogo.",
+    "criterios": [
+      "Mieloma múltiple confirmado",
+      "Recaída después de trasplante autólogo de médula ósea",
+      "Al menos una línea previa de tratamiento",
+      "Función renal compatible con el protocolo"
+    ],
+    "actualizado": "2026-07-20"
+  },
+  {
+    "id": "est-006",
+    "titulo": "Nueva terapia dirigida en leucemia mieloide aguda en adultos mayores",
+    "tipoCancer": "Leucemia",
+    "fase": "Fase II",
+    "centro": "Centro de Investigación Clínica Sur",
+    "comuna": "San Miguel",
+    "estado": "cerrado",
+    "patrocinador": "Red de Ensayos Uro-Oncológicos Chile",
+    "descripcionBreve": "Evaluó una terapia dirigida de baja toxicidad en pacientes mayores de 65 años con leucemia mieloide aguda no candidatos a quimioterapia intensiva.",
+    "criterios": [
+      "Leucemia mieloide aguda confirmada",
+      "65 años o más",
+      "No candidato a quimioterapia de inducción intensiva",
+      "ECOG 0–2"
+    ],
+    "actualizado": "2026-05-10"
+  }
+]

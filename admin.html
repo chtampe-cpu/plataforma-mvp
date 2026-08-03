@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Administración — Estudios Clínicos Oncológicos</title>
+<meta name="theme-color" content="#1f4a43">
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" href="./icons/icon-192.png">
+<link rel="stylesheet" href="./css/estilos.css">
+</head>
+<body>
+
+<header class="app-header">
+  <div class="header-inner">
+    <a class="brand" href="./index.html">
+      <span class="mark">La Voz de los Pacientes</span>
+      <span class="tagline">Panel de administración</span>
+    </a>
+    <a class="btn btn-ghost" href="./index.html" style="min-height:38px; padding:0.4rem 0.8rem; font-size:0.82rem;">Ver catálogo</a>
+  </div>
+</header>
+
+<main class="container">
+  <span class="eyebrow">Panel interno · Fundación</span>
+  <h1>Administrar estudios clínicos</h1>
+  <p class="lede">Agrega, edita o cierra estudios sin depender de desarrollo. Los cambios se reflejan de inmediato en el catálogo público.</p>
+
+  <div class="admin-toolbar">
+    <span class="badge-count" id="contador-estudios">0 estudios</span>
+    <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+      <button class="btn btn-ghost" id="btn-restablecer" style="min-height:38px; padding:0.4rem 0.8rem; font-size:0.82rem;">Restablecer datos de ejemplo</button>
+      <button class="btn btn-primary" id="btn-nuevo" style="min-height:38px; padding:0.4rem 0.9rem; font-size:0.85rem;">+ Nuevo estudio</button>
+    </div>
+  </div>
+
+  <form class="admin-form" id="form-estudio" hidden>
+    <input type="hidden" id="f-id">
+    <div class="field span-2">
+      <label for="f-titulo">Título del estudio</label>
+      <input type="text" id="f-titulo" required>
+    </div>
+    <div class="field">
+      <label for="f-cancer">Tipo de cáncer</label>
+      <input type="text" id="f-cancer" required>
+    </div>
+    <div class="field">
+      <label for="f-fase">Fase</label>
+      <input type="text" id="f-fase" placeholder="Ej: Fase III" required>
+    </div>
+    <div class="field">
+      <label for="f-centro">Centro</label>
+      <input type="text" id="f-centro" required>
+    </div>
+    <div class="field">
+      <label for="f-comuna">Comuna</label>
+      <input type="text" id="f-comuna" required>
+    </div>
+    <div class="field">
+      <label for="f-estado">Estado de reclutamiento</label>
+      <select id="f-estado">
+        <option value="abierto">Abierto</option>
+        <option value="pausado">Pausado</option>
+        <option value="cerrado">Cerrado</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="f-patrocinador">Patrocinador</label>
+      <input type="text" id="f-patrocinador">
+    </div>
+    <div class="field span-2">
+      <label for="f-descripcion">Descripción breve</label>
+      <textarea id="f-descripcion" required></textarea>
+    </div>
+    <div class="field span-2">
+      <label for="f-criterios">Criterios de inclusión (uno por línea)</label>
+      <textarea id="f-criterios" placeholder="18 años o más&#10;Diagnóstico confirmado…"></textarea>
+    </div>
+    <div class="span-2" style="display:flex; gap:0.6rem;">
+      <button type="submit" class="btn btn-primary">Guardar estudio</button>
+      <button type="button" class="btn btn-ghost" id="btn-cancelar-form">Cancelar</button>
+    </div>
+  </form>
+
+  <div class="admin-table-wrap">
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>Título</th>
+          <th>Tipo</th>
+          <th>Estado</th>
+          <th>Comuna</th>
+          <th>Actualizado</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="tabla-estudios"></tbody>
+    </table>
+  </div>
+
+  <h2 style="margin-top:2rem;">Postulaciones recibidas</h2>
+  <p class="lede" style="font-size:0.86rem;">Consentimientos firmados por pacientes o familiares.</p>
+  <div class="admin-table-wrap">
+    <table class="admin-table">
+      <thead>
+        <tr>
+          <th>Folio</th>
+          <th>Estudio</th>
+          <th>Nombre</th>
+          <th>Quién postula</th>
+          <th>Fecha</th>
+        </tr>
+      </thead>
+      <tbody id="tabla-postulaciones"></tbody>
+    </table>
+  </div>
+</main>
+
+<footer class="app-footer">
+  Fundación La Voz de los Pacientes Chile — Panel interno (MVP)
+</footer>
+
+<div id="toast" class="toast"></div>
+
+<script src="./js/estudios.js"></script>
+<script src="./js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Detalle del estudio — La Voz de los Pacientes Chile</title>
+<meta name="theme-color" content="#1f4a43">
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" href="./icons/icon-192.png">
+<link rel="stylesheet" href="./css/estilos.css">
+</head>
+<body>
+
+<header class="app-header">
+  <div class="header-inner">
+    <a class="brand" href="./index.html">
+      <span class="mark">La Voz de los Pacientes</span>
+      <span class="tagline">Estudios clínicos</span>
+    </a>
+    <a class="btn btn-ghost" href="./index.html" style="min-height:38px; padding:0.4rem 0.8rem; font-size:0.82rem;">← Catálogo</a>
+  </div>
+</header>
+
+<main class="container" id="contenido-estudio">
+  <p class="lede">Cargando estudio…</p>
+</main>
+
+<footer class="app-footer">
+  Fundación La Voz de los Pacientes Chile — Portal de estudios clínicos (MVP)
+</footer>
+
+<!-- Modal de consentimiento informado -->
+<div class="modal-overlay" id="modal-consentimiento" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-titulo">
+    <div class="modal-header">
+      <h2 id="modal-titulo" style="margin:0;">Consentimiento informado</h2>
+      <button class="modal-close" id="btn-cerrar-modal" aria-label="Cerrar">×</button>
+    </div>
+
+    <div id="vista-formulario">
+      <p class="lede" id="modal-subtitulo" style="font-size:0.86rem;"></p>
+
+      <div class="consent-text" id="texto-consentimiento"></div>
+
+      <div class="field" style="margin-bottom:0.8rem;">
+        <label for="nombre-paciente">Nombre completo de quien postula</label>
+        <input type="text" id="nombre-paciente" placeholder="Nombre y apellido">
+      </div>
+      <div class="field" style="margin-bottom:0.8rem;">
+        <label for="rut-paciente">RUT</label>
+        <input type="text" id="rut-paciente" placeholder="Ej: 12.345.678-9">
+      </div>
+      <div class="field" style="margin-bottom:0.8rem;">
+        <label for="relacion-paciente">¿Quién postula?</label>
+        <select id="relacion-paciente">
+          <option value="paciente">El propio paciente</option>
+          <option value="familiar">Un familiar o cuidador en su representación</option>
+        </select>
+      </div>
+
+      <div class="checkbox-row">
+        <input type="checkbox" id="check-acepto">
+        <label for="check-acepto">He leído el consentimiento informado, entiendo su contenido y acepto ser contactado por el equipo del estudio.</label>
+      </div>
+
+      <div class="signature-field">
+        <label>Firma</label>
+        <div class="signature-pad-wrap">
+          <canvas id="firma-canvas"></canvas>
+          <span class="signature-hint" id="firma-hint">Firma aquí con el dedo o el mouse</span>
+        </div>
+        <div class="signature-actions">
+          <span id="firma-estado" style="color:var(--ink-faint);">Sin firma</span>
+          <button type="button" class="link-btn" id="btn-limpiar-firma">Limpiar</button>
+        </div>
+      </div>
+
+      <p class="consent-meta">Al enviar se registrará automáticamente la fecha, hora, dirección IP y dispositivo utilizado, como respaldo del consentimiento.</p>
+
+      <button class="btn btn-accent btn-block" id="btn-enviar-consentimiento">Firmar y enviar postulación</button>
+    </div>
+
+    <div id="vista-confirmacion" hidden>
+      <div class="confirm-panel">
+        <div class="confirm-icon">✓</div>
+        <h3>Postulación enviada</h3>
+        <p class="lede" style="margin: 0 auto;">Tu consentimiento quedó registrado. El equipo del estudio se pondrá en contacto contigo.</p>
+        <p class="consent-meta" id="folio-confirmacion"></p>
+        <button class="btn btn-primary btn-block" id="btn-cerrar-confirmacion">Volver al catálogo</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="./js/estudios.js"></script>
+<script src="./js/estudio.js"></script>
+<script src="./js/consentimiento.js"></script>
+<script>
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("./sw.js").catch(() => {});
+    });
+  }
+</script>
+</body>
+</html>
