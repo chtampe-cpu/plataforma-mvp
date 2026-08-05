@@ -21,14 +21,59 @@
         <span class="tagline">Panel de administración</span>
       </span>
     </a>
-    <a class="btn btn-ghost" href="./index.html" style="min-height:38px; padding:0.4rem 0.8rem; font-size:0.82rem;">Ver catálogo</a>
+    <div class="header-actions">
+      <button class="btn btn-ghost" id="btn-logout" type="button" hidden style="min-height:38px; padding:0.4rem 0.8rem; font-size:0.82rem;">Cerrar sesión</button>
+      <a class="btn btn-ghost" href="./index.html" style="min-height:38px; padding:0.4rem 0.8rem; font-size:0.82rem;">Ver catálogo</a>
+    </div>
   </div>
 </header>
 
-<main class="container">
-  <span class="eyebrow">Panel interno · Fundación</span>
-  <h1>Administrar estudios clínicos</h1>
-  <p class="lede">Agrega, edita o cierra estudios sin depender de desarrollo. Los cambios se reflejan de inmediato en el catálogo público.</p>
+<main class="container admin-login-screen" id="admin-login">
+  <section class="login-shell" aria-labelledby="login-title">
+    <div class="login-copy">
+      <span class="eyebrow">Acceso restringido</span>
+      <h1 id="login-title">Panel interno de estudios clínicos</h1>
+      <p class="lede">Ingresa con las credenciales de administración para gestionar estudios y revisar postulaciones registradas durante la demo.</p>
+      <div class="login-assurance">
+        <span>Catálogo público separado del panel interno</span>
+        <span>Sesión guardada solo en este navegador</span>
+      </div>
+    </div>
+
+    <form class="login-card" id="form-login" autocomplete="off">
+      <div class="login-card-header">
+        <span class="brand-mark login-mark" aria-hidden="true">LV</span>
+        <div>
+          <strong>Ingresar</strong>
+          <span>Administración MVP</span>
+        </div>
+      </div>
+      <div class="field">
+        <label for="login-usuario">Usuario</label>
+        <input type="text" id="login-usuario" autocomplete="username" required>
+      </div>
+      <div class="field">
+        <label for="login-clave">Contraseña</label>
+        <input type="password" id="login-clave" autocomplete="current-password" required>
+      </div>
+      <p class="login-error" id="login-error" hidden>Credenciales incorrectas.</p>
+      <button class="btn btn-accent btn-block" type="submit">Entrar al panel</button>
+    </form>
+  </section>
+</main>
+
+<main class="container admin-dashboard" id="admin-app" hidden>
+  <section class="admin-hero">
+    <div>
+      <span class="eyebrow">Panel interno · Fundación</span>
+      <h1>Administrar estudios clínicos</h1>
+      <p class="lede">Agrega, edita o cierra estudios sin depender de desarrollo. Los cambios se reflejan de inmediato en el catálogo público de este navegador.</p>
+    </div>
+    <div class="admin-hero-card">
+      <span>Sesión activa</span>
+      <strong>Administrador</strong>
+    </div>
+  </section>
 
   <div class="admin-toolbar">
     <span class="badge-count" id="contador-estudios">0 estudios</span>
