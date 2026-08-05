@@ -3,7 +3,7 @@ const Patologias = (() => {
     { nombre: "Tumores sólidos frecuentes", tipos: ["Mama", "Pulmón", "Próstata"] },
     { nombre: "Cánceres hematológicos", tipos: ["Linfoma", "Mieloma múltiple", "Leucemia"] },
     { nombre: "Tumores digestivos", tipos: ["Gástrico", "Colorrectal"] },
-    { nombre: "Piel y genitourinario", tipos: ["Melanoma", "Renal"] },
+    { nombre: "Piel y genitourinario", tipos: ["Melanoma"] },
   ];
 
   function categoriaDe(tipoCancer) {
@@ -21,7 +21,7 @@ const Patologias = (() => {
 const EstudiosStore = (() => {
   const STORAGE_KEY = "loz_estudios_v1";
   const SEED_VERSION_KEY = "loz_estudios_seed_version";
-  const SEED_VERSION = "regional-2026-08-05";
+  const SEED_VERSION = "regional-validado-2026-08-05";
   const SEED_URL = "./data/estudios.json";
 
   async function seedFromFile() {
@@ -104,6 +104,7 @@ const ConsentimientosStore = (() => {
     AnalyticsStore.track("consentimiento_firmado", {
       estudioId: registro.estudioId,
       estudioTitulo: registro.estudioTitulo,
+      estudioPais: registro.estudioPais,
     });
     return registros;
   }
