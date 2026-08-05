@@ -7,9 +7,9 @@ const Consentimiento = (() => {
   function textoConsentimiento(estudio) {
     return `
       <p><strong>Consentimiento informado para postulación a estudio clínico</strong></p>
-      <p>Usted está postulando al estudio "${estudio.titulo}" (${estudio.fase}), realizado en ${estudio.centro}. Este documento registra su interés en participar y su autorización para ser contactado por el equipo del estudio.</p>
+      <p>Usted está postulando al estudio "${estudio.titulo}" (${estudio.fase}), realizado en ${estudio.centro}, ${estudio.comuna}, ${estudio.pais || "Chile"}. Este documento registra su interés en participar y su autorización para ser contactado por el equipo del estudio.</p>
       <p>La participación final en el estudio quedará sujeta a una evaluación clínica adicional realizada por el equipo médico, incluyendo la verificación de los criterios de inclusión y la firma del consentimiento informado definitivo del protocolo, según lo exige el Comité Ético Científico correspondiente.</p>
-      <p>Sus datos de contacto y la información entregada serán compartidos únicamente con el centro de investigación asociado a este estudio, y tratados conforme a la normativa de protección de datos personales vigente en Chile.</p>
+      <p>Sus datos de contacto y la información entregada serán compartidos únicamente con el centro de investigación asociado a este estudio, y tratados conforme a la normativa de protección de datos personales vigente en el país correspondiente.</p>
       <p>Usted puede retirar su postulación en cualquier momento contactando a la Fundación La Voz de los Pacientes Chile, sin que esto afecte su atención en la fundación.</p>
     `;
   }
@@ -128,6 +128,8 @@ const Consentimiento = (() => {
       folio,
       estudioId: estudioActual.id,
       estudioTitulo: estudioActual.titulo,
+      estudioPais: estudioActual.pais || "Chile",
+      estudioUbicacion: estudioActual.comuna || "",
       nombre,
       rut,
       relacion: document.getElementById("relacion-paciente").value,
