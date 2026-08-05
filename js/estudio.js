@@ -21,13 +21,14 @@ function renderNoEncontrado() {
 
 function renderEstudio(estudio) {
   const cerrado = estudio.estado === "cerrado";
+  const pais = estudio.pais || "Chile";
   const contenedor = document.getElementById("contenido-estudio");
 
   contenedor.innerHTML = `
     <div class="detail-hero">
       <div class="detail-hero-main">
         <div class="top-row">
-          <span class="eyebrow">${estudio.tipoCancer} · ${estudio.fase}</span>
+          <span class="eyebrow">${pais} · ${estudio.tipoCancer} · ${estudio.fase}</span>
           <span class="status-pill status-${estudio.estado}">${ESTADO_LABEL_DETALLE[estudio.estado] || estudio.estado}</span>
         </div>
         <h1>${estudio.titulo}</h1>
@@ -49,12 +50,16 @@ function renderEstudio(estudio) {
     <div class="detail-grid">
       <div class="detail-block detail-block-highlight">
         <h3>Centro y ubicación</h3>
-        <p style="margin:0;"><strong>${estudio.centro}</strong><br>${estudio.comuna}</p>
+        <p style="margin:0;"><strong>${estudio.centro}</strong><br>${estudio.comuna}, ${pais}</p>
       </div>
 
       <div class="detail-block">
         <h3>Información del estudio</h3>
         <div class="info-grid">
+          <div class="item">
+            <div class="label">País</div>
+            <div class="value">${pais}</div>
+          </div>
           <div class="item">
             <div class="label">Patrocinador</div>
             <div class="value">${estudio.patrocinador}</div>
@@ -83,7 +88,7 @@ function renderEstudio(estudio) {
 
   if (!cerrado) {
     document.getElementById("btn-postular").addEventListener("click", () => {
-      AnalyticsStore.track("postulacion_iniciada", { estudioId: estudio.id, estudioTitulo: estudio.titulo });
+      AnalyticsStore.track("postulacion_iniciada", { estudioId: estudio.id, estudioTitulo: estudio.titulo, pais });
       Consentimiento.abrir(estudio);
     });
 
@@ -99,7 +104,7 @@ async function initDetalle() {
   if (!id) return renderNoEncontrado();
   const estudio = await EstudiosStore.getById(id);
   if (!estudio) return renderNoEncontrado();
-  AnalyticsStore.track("study_view", { estudioId: estudio.id, estudioTitulo: estudio.titulo, tipoCancer: estudio.tipoCancer });
+  AnalyticsStore.track("study_view", { estudioId: estudio.id, estudioTitulo: estudio.titulo, tipoCancer: estudio.tipoCancer, pais: estudio.pais || "Chile" });
   renderEstudio(estudio);
 }
 
