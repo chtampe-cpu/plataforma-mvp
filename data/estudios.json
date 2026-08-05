@@ -5,6 +5,7 @@
     "tipoCancer": "Mama",
     "fase": "Fase III",
     "centro": "Clínica Inmunocel — La Voz de los Pacientes Chile",
+    "pais": "Chile",
     "comuna": "Las Condes",
     "estado": "abierto",
     "patrocinador": "Grupo Oncológico Cooperativo Latinoamericano",
@@ -24,6 +25,7 @@
     "tipoCancer": "Pulmón",
     "fase": "Fase II",
     "centro": "Instituto Oncológico Regional",
+    "pais": "Chile",
     "comuna": "Providencia",
     "estado": "abierto",
     "patrocinador": "Consorcio Internacional de Oncología Torácica",
@@ -42,6 +44,7 @@
     "tipoCancer": "Próstata",
     "fase": "Fase III",
     "centro": "Centro de Investigación Clínica Sur",
+    "pais": "Chile",
     "comuna": "San Miguel",
     "estado": "abierto",
     "patrocinador": "Red de Ensayos Uro-Oncológicos Chile",
@@ -60,6 +63,7 @@
     "tipoCancer": "Linfoma",
     "fase": "Fase I/II",
     "centro": "Clínica Inmunocel — La Voz de los Pacientes Chile",
+    "pais": "Chile",
     "comuna": "Las Condes",
     "estado": "pausado",
     "patrocinador": "Iniciativa Latinoamericana de Terapias Celulares",
@@ -78,6 +82,7 @@
     "tipoCancer": "Mieloma múltiple",
     "fase": "Fase II",
     "centro": "Instituto Oncológico Regional",
+    "pais": "Chile",
     "comuna": "Providencia",
     "estado": "abierto",
     "patrocinador": "Grupo Oncológico Cooperativo Latinoamericano",
@@ -96,6 +101,7 @@
     "tipoCancer": "Leucemia",
     "fase": "Fase II",
     "centro": "Centro de Investigación Clínica Sur",
+    "pais": "Chile",
     "comuna": "San Miguel",
     "estado": "cerrado",
     "patrocinador": "Red de Ensayos Uro-Oncológicos Chile",
@@ -107,5 +113,100 @@
       "ECOG 0–2"
     ],
     "actualizado": "2026-05-10"
+  },
+  {
+    "id": "est-007",
+    "titulo": "Vacuna terapéutica en cáncer de mama triple negativo avanzado",
+    "tipoCancer": "Mama",
+    "fase": "Fase II",
+    "centro": "Centro Oncológico Asociado Buenos Aires",
+    "pais": "Argentina",
+    "comuna": "Buenos Aires",
+    "estado": "abierto",
+    "patrocinador": "Red Latinoamericana de Investigación Oncológica",
+    "descripcionBreve": "Evalúa respuesta inmune y control de enfermedad en pacientes con cáncer de mama triple negativo avanzado.",
+    "criterios": [
+      "Cáncer de mama triple negativo confirmado",
+      "Enfermedad avanzada o metastásica",
+      "ECOG 0–1",
+      "Función hematológica adecuada"
+    ],
+    "actualizado": "2026-07-18"
+  },
+  {
+    "id": "est-008",
+    "titulo": "Terapia combinada en cáncer gástrico metastásico HER2 negativo",
+    "tipoCancer": "Gástrico",
+    "fase": "Fase III",
+    "centro": "Instituto de Investigación Clínica Bogotá",
+    "pais": "Colombia",
+    "comuna": "Bogotá",
+    "estado": "abierto",
+    "patrocinador": "Consorcio Regional de Oncología Digestiva",
+    "descripcionBreve": "Compara una combinación sistémica frente a estándar en cáncer gástrico metastásico HER2 negativo.",
+    "criterios": [
+      "Cáncer gástrico o de unión gastroesofágica metastásico",
+      "HER2 negativo documentado",
+      "Sin tratamiento sistémico previo para enfermedad metastásica",
+      "18 años o más"
+    ],
+    "actualizado": "2026-07-12"
+  },
+  {
+    "id": "est-009",
+    "titulo": "Inmunoterapia adyuvante en melanoma de alto riesgo",
+    "tipoCancer": "Melanoma",
+    "fase": "Fase II/III",
+    "centro": "Centro Oncológico Lima Investigación",
+    "pais": "Perú",
+    "comuna": "Lima",
+    "estado": "pausado",
+    "patrocinador": "Red Andina de Investigación Clínica",
+    "descripcionBreve": "Estudia inmunoterapia adyuvante en pacientes con melanoma resecado y alto riesgo de recurrencia.",
+    "criterios": [
+      "Melanoma cutáneo resecado",
+      "Alto riesgo de recurrencia",
+      "Sin enfermedad activa por imágenes",
+      "Función hepática y renal adecuadas"
+    ],
+    "actualizado": "2026-06-22"
+  },
+  {
+    "id": "est-010",
+    "titulo": "Terapia dirigida en cáncer colorrectal metastásico con mutación BRAF",
+    "tipoCancer": "Colorrectal",
+    "fase": "Fase III",
+    "centro": "Unidad de Ensayos Oncológicos Ciudad de México",
+    "pais": "México",
+    "comuna": "Ciudad de México",
+    "estado": "abierto",
+    "patrocinador": "Consorcio Latinoamericano de Oncología de Precisión",
+    "descripcionBreve": "Evalúa combinación dirigida para pacientes con cáncer colorrectal metastásico y mutación BRAF documentada.",
+    "criterios": [
+      "Cáncer colorrectal metastásico confirmado",
+      "Mutación BRAF V600E documentada",
+      "Progresión a tratamiento estándar previo",
+      "ECOG 0–2"
+    ],
+    "actualizado": "2026-07-25"
+  },
+  {
+    "id": "est-011",
+    "titulo": "Inmunoterapia en cáncer renal avanzado de células claras",
+    "tipoCancer": "Renal",
+    "fase": "Fase II",
+    "centro": "Centro Regional de Estudios Oncológicos Montevideo",
+    "pais": "Uruguay",
+    "comuna": "Montevideo",
+    "estado": "abierto",
+    "patrocinador": "Alianza Regional de Oncología Genitourinaria",
+    "descripcionBreve": "Estudia respuesta y tolerabilidad de inmunoterapia en cáncer renal avanzado de células claras.",
+    "criterios": [
+      "Cáncer renal avanzado de células claras",
+      "Enfermedad medible por imágenes",
+      "Sin enfermedad autoinmune activa",
+      "18 años o más"
+    ],
+    "actualizado": "2026-07-08"
   }
 ]
