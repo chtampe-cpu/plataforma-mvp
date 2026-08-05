@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Estudios Clínicos Oncológicos — La Voz de los Pacientes Chile</title>
-<meta name="description" content="Encuentra estudios clínicos oncológicos disponibles en Chile y postula con consentimiento informado digital.">
+<meta name="description" content="Encuentra estudios clínicos oncológicos disponibles en Chile y la red regional, y postula con consentimiento informado digital.">
 <meta name="theme-color" content="#1f4a43">
 <link rel="manifest" href="./manifest.json">
 <link rel="icon" href="./icons/icon-192.png">
@@ -36,8 +36,8 @@
   <section class="catalog-hero" aria-labelledby="catalog-title">
     <div class="hero-copy">
       <span class="eyebrow">Fundación La Voz de los Pacientes Chile</span>
-      <h1 id="catalog-title">Encuentra estudios clínicos oncológicos disponibles</h1>
-      <p class="lede">Filtra por diagnóstico, comuna y estado de reclutamiento. Revisa requisitos y postula con consentimiento informado digital.</p>
+      <h1 id="catalog-title">Encuentra estudios clínicos oncológicos en la red regional</h1>
+      <p class="lede">Filtra por país, patología, ubicación y estado de reclutamiento. Revisa requisitos y postula con consentimiento informado digital.</p>
       <div class="hero-actions">
         <a class="btn btn-accent" href="#grilla-estudios">Ver estudios</a>
         <a class="btn btn-ghost" href="./estudio.html?id=est-001&demo=postular">Demo postulación</a>
@@ -46,13 +46,13 @@
     <div class="hero-panel" aria-label="Resumen del catálogo">
       <div class="hero-panel-top">
         <span class="pulse-dot"></span>
-        <span>Catálogo activo</span>
+        <span>Catálogo regional demo</span>
       </div>
-      <div class="hero-panel-main" id="hero-total">6</div>
+      <div class="hero-panel-main" id="hero-total">0</div>
       <div class="hero-panel-label">estudios cargados</div>
       <div class="hero-mini-grid">
         <div><strong id="hero-abiertos">0</strong><span>abiertos</span></div>
-        <div><strong id="hero-comunas">0</strong><span>comunas</span></div>
+        <div><strong id="hero-paises">0</strong><span>países</span></div>
       </div>
     </div>
   </section>
@@ -67,8 +67,8 @@
       <strong id="stat-cancer">0</strong>
     </div>
     <div class="stat-card">
-      <span class="stat-label">Centros</span>
-      <strong id="stat-centros">0</strong>
+      <span class="stat-label">Países</span>
+      <strong id="stat-paises">0</strong>
     </div>
   </section>
 
@@ -76,9 +76,15 @@
 
   <form class="filters filters-panel" id="filtros" autocomplete="off">
     <div class="search-box">
-      <input type="search" id="buscar" placeholder="Buscar por estudio, cáncer, categoría o centro…" aria-label="Buscar estudio">
+      <input type="search" id="buscar" placeholder="Buscar por estudio, país, cáncer, categoría o centro…" aria-label="Buscar estudio">
     </div>
-    <div class="filter-row">
+    <div class="filter-row filter-row-3">
+      <div class="field">
+        <label for="filtro-pais">País</label>
+        <select id="filtro-pais">
+          <option value="">Todos los países</option>
+        </select>
+      </div>
       <div class="field">
         <label for="filtro-cancer">Patología</label>
         <select id="filtro-cancer">
@@ -86,7 +92,7 @@
         </select>
       </div>
       <div class="field">
-        <label for="filtro-comuna">Comuna</label>
+        <label for="filtro-comuna">Ciudad / comuna</label>
         <select id="filtro-comuna">
           <option value="">Todas</option>
         </select>
@@ -117,7 +123,7 @@
 </main>
 
 <footer class="app-footer">
-  Fundación La Voz de los Pacientes Chile — Portal de estudios clínicos (MVP)
+  Fundación La Voz de los Pacientes Chile — Portal regional de estudios clínicos (MVP)
 </footer>
 
 <div id="toast" class="toast"></div>
