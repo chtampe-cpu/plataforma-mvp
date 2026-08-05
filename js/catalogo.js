@@ -8,6 +8,23 @@ const ESTADO_HINT = {
 let estudiosCache = [];
 let estadosActivos = new Set(["abierto", "pausado"]);
 
+function poblarSelectCategorias(select, estudios) {
+  const tiposDisponibles = new Set(estudios.map((e) => e.tipoCancer));
+  Patologias.todas().forEach((categoria) => {
+    const tipos = categoria.tipos.filter((tipo) => tiposDisponibles.has(tipo));
+    if (!tipos.length) return;
+    const grupo = document.createElement("optgroup");
+    grupo.label = categoria.nombre;
+    tipos.forEach((tipo) => {
+      const opt = document.createElement("option");
+      opt.value = tipo;
+      opt.textContent = tipo;
+      grupo.appendChild(opt);
+    });
+    select.appendChild(grupo);
+  });
+}
+
 function poblarSelect(select, valores) {
   const actuales = new Set(Array.from(select.options).map((o) => o.value));
   valores.forEach((v) => {
@@ -49,12 +66,46 @@ function actualizarResumen() {
     const el = document.getElementById(id);
     if (el) el.textContent = valor;
   });
+
+  renderCategorias();
+}
+
+function renderCategorias() {
+  const contenedor = document.getElementById("resumen-categorias");
+  if (!contenedor) return;
+
+  const categorias = Patologias.todas().map((categoria) => {
+    const estudios = estudiosCache.filter((e) => categoria.tipos.includes(e.tipoCancer));
+    const abiertos = estudios.filter((e) => e.estado === "abierto").length;
+    return { ...categoria, total: estudios.length, abiertos };
+  }).filter((c) => c.total > 0);
+
+  contenedor.innerHTML = categorias.map((c) => `
+    <button class="category-card" type="button" data-categoria="${c.nombre}">
+      <span>${c.nombre}</span>
+      <strong>${c.total}</strong>
+      <small>${c.abiertos} reclutando · ${c.tipos.join(", ")}</small>
+    </button>
+  `).join("");
+
+  contenedor.querySelectorAll(".category-card").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const categoria = Patologias.todas().find((c) => c.nombre === btn.dataset.categoria);
+      const primerTipo = categoria?.tipos.find((tipo) => estudiosCache.some((e) => e.tipoCancer === tipo));
+      if (!primerTipo) return;
+      document.getElementById("filtro-cancer").value = primerTipo;
+      aplicarFiltros();
+      document.getElementById("grilla-estudios").scrollIntoView({ behavior: "smooth" });
+    });
+  });
 }
 
 function crearTarjeta(estudio) {
+  const categoria = Patologias.categoriaDe(estudio.tipoCancer);
   const a = document.createElement("a");
   a.className = `study-card study-card-${estudio.estado}`;
   a.href = `./estudio.html?id=${encodeURIComponent(estudio.id)}`;
+  a.addEventListener("click", () => AnalyticsStore.track("study_click", { estudioId: estudio.id, estudioTitulo: estudio.titulo }));
   a.innerHTML = `
     <div class="card-visual" aria-hidden="true">
       <span>${iniciales(estudio.tipoCancer)}</span>
@@ -63,6 +114,7 @@ function crearTarjeta(estudio) {
       <span class="status-pill status-${estudio.estado}">${ESTADO_LABEL[estudio.estado] || estudio.estado}</span>
       <span class="card-phase">${estudio.fase}</span>
     </div>
+    <span class="category-tag">${categoria}</span>
     <h3>${estudio.titulo}</h3>
     <p class="card-description">${estudio.descripcionBreve}</p>
     <div class="card-meta-list">
@@ -84,7 +136,7 @@ function aplicarFiltros() {
   const comuna = document.getElementById("filtro-comuna").value;
 
   const filtrados = estudiosCache.filter((e) => {
-    const campos = [e.titulo, e.tipoCancer, e.centro, e.comuna, e.descripcionBreve]
+    const campos = [e.titulo, e.tipoCancer, Patologias.categoriaDe(e.tipoCancer), e.centro, e.comuna, e.descripcionBreve]
       .join(" ")
       .toLowerCase();
     if (!estadosActivos.has(e.estado)) return false;
@@ -117,10 +169,11 @@ function limpiarFiltros() {
 }
 
 async function init() {
+  AnalyticsStore.track("page_view", { pagina: "catalogo" });
   estudiosCache = await EstudiosStore.getAll();
 
   actualizarResumen();
-  poblarSelect(document.getElementById("filtro-cancer"), [...new Set(estudiosCache.map((e) => e.tipoCancer))].sort());
+  poblarSelectCategorias(document.getElementById("filtro-cancer"), estudiosCache);
   poblarSelect(document.getElementById("filtro-comuna"), [...new Set(estudiosCache.map((e) => e.comuna))].sort());
 
   document.getElementById("buscar").addEventListener("input", aplicarFiltros);
