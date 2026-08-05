@@ -1,3 +1,21 @@
+const Patologias = (() => {
+  const CATEGORIAS = [
+    { nombre: "Tumores sólidos", tipos: ["Mama", "Pulmón", "Próstata"] },
+    { nombre: "Cánceres hematológicos", tipos: ["Linfoma", "Mieloma múltiple", "Leucemia"] },
+  ];
+
+  function categoriaDe(tipoCancer) {
+    const categoria = CATEGORIAS.find((c) => c.tipos.includes(tipoCancer));
+    return categoria ? categoria.nombre : "Otras patologías";
+  }
+
+  function todas() {
+    return CATEGORIAS;
+  }
+
+  return { categoriaDe, todas };
+})();
+
 const EstudiosStore = (() => {
   const STORAGE_KEY = "loz_estudios_v1";
   const SEED_URL = "./data/estudios.json";
@@ -76,8 +94,64 @@ const ConsentimientosStore = (() => {
     const registros = getAll();
     registros.unshift(registro);
     localStorage.setItem(STORAGE_KEY, JSON.stringify(registros));
+    AnalyticsStore.track("consentimiento_firmado", {
+      estudioId: registro.estudioId,
+      estudioTitulo: registro.estudioTitulo,
+    });
     return registros;
   }
 
   return { getAll, add };
+})();
+
+const AnalyticsStore = (() => {
+  const STORAGE_KEY = "loz_analytics_v1";
+  const SESSION_KEY = "loz_visit_session_v1";
+
+  function sessionId() {
+    let id = sessionStorage.getItem(SESSION_KEY);
+    if (!id) {
+      id = `SES-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`.toUpperCase();
+      sessionStorage.setItem(SESSION_KEY, id);
+    }
+    return id;
+  }
+
+  function getAll() {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : [];
+  }
+
+  function saveAll(eventos) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(eventos.slice(0, 500)));
+  }
+
+  function track(tipo, datos = {}) {
+    const eventos = getAll();
+    eventos.unshift({
+      id: `EV-${Date.now().toString(36).toUpperCase()}`,
+      tipo,
+      datos,
+      ruta: window.location.pathname + window.location.search,
+      fecha: new Date().toISOString(),
+      sessionId: sessionId(),
+      userAgent: navigator.userAgent,
+    });
+    saveAll(eventos);
+    return eventos;
+  }
+
+  function resumen() {
+    const eventos = getAll();
+    const sesiones = new Set(eventos.map((e) => e.sessionId));
+    return {
+      eventos,
+      visitas: eventos.filter((e) => e.tipo === "page_view").length,
+      sesiones: sesiones.size,
+      vistasEstudio: eventos.filter((e) => e.tipo === "study_view").length,
+      postulaciones: eventos.filter((e) => e.tipo === "consentimiento_firmado").length,
+    };
+  }
+
+  return { track, getAll, resumen };
 })();
