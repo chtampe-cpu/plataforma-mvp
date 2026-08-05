@@ -65,6 +65,7 @@ function limpiarFormulario() {
   document.getElementById("f-cancer").value = "";
   document.getElementById("f-fase").value = "";
   document.getElementById("f-centro").value = "";
+  document.getElementById("f-pais").value = "Chile";
   document.getElementById("f-comuna").value = "";
   document.getElementById("f-estado").value = "abierto";
   document.getElementById("f-patrocinador").value = "";
@@ -78,6 +79,7 @@ function cargarEnFormulario(estudio) {
   document.getElementById("f-cancer").value = estudio.tipoCancer;
   document.getElementById("f-fase").value = estudio.fase;
   document.getElementById("f-centro").value = estudio.centro;
+  document.getElementById("f-pais").value = estudio.pais || "Chile";
   document.getElementById("f-comuna").value = estudio.comuna;
   document.getElementById("f-estado").value = estudio.estado;
   document.getElementById("f-patrocinador").value = estudio.patrocinador || "";
@@ -96,6 +98,7 @@ function leerFormulario() {
     tipoCancer: document.getElementById("f-cancer").value.trim(),
     fase: document.getElementById("f-fase").value.trim(),
     centro: document.getElementById("f-centro").value.trim(),
+    pais: document.getElementById("f-pais").value.trim() || "Chile",
     comuna: document.getElementById("f-comuna").value.trim(),
     estado: document.getElementById("f-estado").value,
     patrocinador: document.getElementById("f-patrocinador").value.trim(),
@@ -111,6 +114,7 @@ async function renderTablaEstudios() {
   tbody.innerHTML = estudios.map((e) => `
     <tr>
       <td>${e.titulo}</td>
+      <td>${e.pais || "Chile"}</td>
       <td>${e.tipoCancer}</td>
       <td>${Patologias.categoriaDe(e.tipoCancer)}</td>
       <td><span class="status-pill status-${e.estado}">${ESTADO_LABEL_ADMIN[e.estado] || e.estado}</span></td>
@@ -182,6 +186,8 @@ function abrirConsentimiento(folio) {
       <div><span>Firmante</span><strong>${registro.nombre}</strong></div>
       <div><span>RUT</span><strong>${registro.rut}</strong></div>
       <div><span>Relación</span><strong>${registro.relacion === "familiar" ? "Familiar / cuidador" : "Paciente"}</strong></div>
+      <div><span>País estudio</span><strong>${registro.estudioPais || "Chile"}</strong></div>
+      <div><span>Ciudad / comuna</span><strong>${registro.estudioUbicacion || "no disponible"}</strong></div>
       <div><span>IP registrada</span><strong>${registro.ip}</strong></div>
     </div>
     <div class="consent-record-study">
@@ -207,7 +213,7 @@ function renderTablaPostulaciones() {
   tbody.innerHTML = consentimientosCache.map((r) => `
     <tr>
       <td>${r.folio}</td>
-      <td>${r.estudioTitulo}</td>
+      <td>${r.estudioTitulo}<br><small>${r.estudioPais || "Chile"}</small></td>
       <td>${r.nombre}<br><small>${r.relacion === "familiar" ? "Familiar / cuidador" : "Paciente"}</small></td>
       <td>${r.rut}</td>
       <td>${r.fecha} ${r.hora}</td>
