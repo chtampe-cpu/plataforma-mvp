@@ -19,6 +19,9 @@ const Consentimiento = (() => {
     const ratio = window.devicePixelRatio || 1;
     const width = wrap.clientWidth;
     const height = 140;
+    const firmaAnterior = !firmaVacia && canvas.width && canvas.height
+      ? canvas.toDataURL("image/png")
+      : null;
     canvas.width = width * ratio;
     canvas.height = height * ratio;
     canvas.style.width = `${width}px`;
@@ -28,6 +31,12 @@ const Consentimiento = (() => {
     ctx.lineWidth = 2.2;
     ctx.lineCap = "round";
     ctx.strokeStyle = (getComputedStyle(document.body).getPropertyValue("--ink") || "").trim() || "#1b211d";
+
+    if (firmaAnterior) {
+      const img = new Image();
+      img.onload = () => ctx.drawImage(img, 0, 0, width, height);
+      img.src = firmaAnterior;
+    }
   }
 
   function posDesdeEvento(e) {
