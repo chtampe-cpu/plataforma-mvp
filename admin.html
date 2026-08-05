@@ -72,7 +72,7 @@
     <div>
       <span class="eyebrow">Panel interno · Fundación</span>
       <h1>Administrar estudios clínicos</h1>
-      <p class="lede">Gestiona el catálogo, monitorea interés de pacientes y revisa los consentimientos informados registrados en este navegador.</p>
+      <p class="lede">Gestiona el catálogo regional, monitorea interés de pacientes y revisa los consentimientos informados registrados en este navegador.</p>
     </div>
     <div class="admin-hero-card">
       <span>Sesión activa</span>
@@ -114,7 +114,11 @@
       <input type="text" id="f-centro" required>
     </div>
     <div class="field">
-      <label for="f-comuna">Comuna</label>
+      <label for="f-pais">País</label>
+      <input type="text" id="f-pais" placeholder="Ej: Chile" required>
+    </div>
+    <div class="field">
+      <label for="f-comuna">Ciudad / comuna</label>
       <input type="text" id="f-comuna" required>
     </div>
     <div class="field">
@@ -148,10 +152,11 @@
       <thead>
         <tr>
           <th>Título</th>
+          <th>País</th>
           <th>Tipo</th>
           <th>Categoría</th>
           <th>Estado</th>
-          <th>Comuna</th>
+          <th>Ciudad</th>
           <th>Actualizado</th>
           <th></th>
         </tr>
