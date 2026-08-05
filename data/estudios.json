@@ -189,24 +189,5 @@
       "ECOG 0–2"
     ],
     "actualizado": "2026-07-25"
-  },
-  {
-    "id": "est-011",
-    "titulo": "Inmunoterapia en cáncer renal avanzado de células claras",
-    "tipoCancer": "Renal",
-    "fase": "Fase II",
-    "centro": "Centro Regional de Estudios Oncológicos Montevideo",
-    "pais": "Uruguay",
-    "comuna": "Montevideo",
-    "estado": "abierto",
-    "patrocinador": "Alianza Regional de Oncología Genitourinaria",
-    "descripcionBreve": "Estudia respuesta y tolerabilidad de inmunoterapia en cáncer renal avanzado de células claras.",
-    "criterios": [
-      "Cáncer renal avanzado de células claras",
-      "Enfermedad medible por imágenes",
-      "Sin enfermedad autoinmune activa",
-      "18 años o más"
-    ],
-    "actualizado": "2026-07-08"
   }
 ]
