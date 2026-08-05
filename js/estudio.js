@@ -83,6 +83,7 @@ function renderEstudio(estudio) {
 
   if (!cerrado) {
     document.getElementById("btn-postular").addEventListener("click", () => {
+      AnalyticsStore.track("postulacion_iniciada", { estudioId: estudio.id, estudioTitulo: estudio.titulo });
       Consentimiento.abrir(estudio);
     });
 
@@ -93,10 +94,12 @@ function renderEstudio(estudio) {
 }
 
 async function initDetalle() {
+  AnalyticsStore.track("page_view", { pagina: "detalle" });
   const id = getIdDeUrl();
   if (!id) return renderNoEncontrado();
   const estudio = await EstudiosStore.getById(id);
   if (!estudio) return renderNoEncontrado();
+  AnalyticsStore.track("study_view", { estudioId: estudio.id, estudioTitulo: estudio.titulo, tipoCancer: estudio.tipoCancer });
   renderEstudio(estudio);
 }
 
