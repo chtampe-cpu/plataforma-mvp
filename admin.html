@@ -33,7 +33,7 @@
     <div class="login-copy">
       <span class="eyebrow">Acceso restringido</span>
       <h1 id="login-title">Panel interno de estudios clínicos</h1>
-      <p class="lede">Ingresa con las credenciales de administración para gestionar estudios y revisar postulaciones registradas durante la demo.</p>
+      <p class="lede">Ingresa con las credenciales de administración para gestionar estudios, revisar analítica y auditar consentimientos informados.</p>
       <div class="login-assurance">
         <span>Catálogo público separado del panel interno</span>
         <span>Sesión guardada solo en este navegador</span>
@@ -67,12 +67,19 @@
     <div>
       <span class="eyebrow">Panel interno · Fundación</span>
       <h1>Administrar estudios clínicos</h1>
-      <p class="lede">Agrega, edita o cierra estudios sin depender de desarrollo. Los cambios se reflejan de inmediato en el catálogo público de este navegador.</p>
+      <p class="lede">Gestiona el catálogo, monitorea interés de pacientes y revisa los consentimientos informados registrados en este navegador.</p>
     </div>
     <div class="admin-hero-card">
       <span>Sesión activa</span>
       <strong>Administrador</strong>
     </div>
+  </section>
+
+  <section class="analytics-grid" aria-label="Analítica de visitas">
+    <div class="analytics-card"><span>Visitas</span><strong id="metric-visitas">0</strong></div>
+    <div class="analytics-card"><span>Sesiones</span><strong id="metric-sesiones">0</strong></div>
+    <div class="analytics-card"><span>Fichas vistas</span><strong id="metric-fichas">0</strong></div>
+    <div class="analytics-card"><span>Consentimientos</span><strong id="metric-consentimientos">0</strong></div>
   </section>
 
   <div class="admin-toolbar">
@@ -137,6 +144,7 @@
         <tr>
           <th>Título</th>
           <th>Tipo</th>
+          <th>Categoría</th>
           <th>Estado</th>
           <th>Comuna</th>
           <th>Actualizado</th>
@@ -147,23 +155,49 @@
     </table>
   </div>
 
-  <h2 style="margin-top:2rem;">Postulaciones recibidas</h2>
-  <p class="lede" style="font-size:0.86rem;">Consentimientos firmados por pacientes o familiares.</p>
+  <h2 style="margin-top:2rem;">Registro de consentimientos informados</h2>
+  <p class="lede" style="font-size:0.86rem;">Folio, firmante, respaldo técnico y firma digital capturada.</p>
   <div class="admin-table-wrap">
-    <table class="admin-table">
+    <table class="admin-table consent-table">
       <thead>
         <tr>
           <th>Folio</th>
           <th>Estudio</th>
-          <th>Nombre</th>
-          <th>Quién postula</th>
+          <th>Firmante</th>
+          <th>RUT</th>
           <th>Fecha</th>
+          <th>IP</th>
+          <th>Respaldo</th>
         </tr>
       </thead>
       <tbody id="tabla-postulaciones"></tbody>
     </table>
   </div>
+
+  <h2 style="margin-top:2rem;">Eventos recientes</h2>
+  <div class="admin-table-wrap">
+    <table class="admin-table events-table">
+      <thead>
+        <tr>
+          <th>Evento</th>
+          <th>Ruta</th>
+          <th>Fecha</th>
+        </tr>
+      </thead>
+      <tbody id="tabla-eventos"></tbody>
+    </table>
+  </div>
 </main>
+
+<div class="modal-overlay" id="modal-consentimiento-admin" hidden>
+  <div class="modal consent-record-modal" role="dialog" aria-modal="true" aria-labelledby="modal-consentimiento-titulo">
+    <div class="modal-header">
+      <h2 id="modal-consentimiento-titulo" style="margin:0;">Consentimiento informado</h2>
+      <button class="modal-close" id="btn-cerrar-consentimiento-admin" aria-label="Cerrar">×</button>
+    </div>
+    <div id="detalle-consentimiento-admin"></div>
+  </div>
+</div>
 
 <footer class="app-footer">
   Fundación La Voz de los Pacientes Chile — Panel interno (MVP)
