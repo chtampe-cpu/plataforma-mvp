@@ -1,7 +1,9 @@
 const Patologias = (() => {
   const CATEGORIAS = [
-    { nombre: "Tumores sólidos", tipos: ["Mama", "Pulmón", "Próstata"] },
+    { nombre: "Tumores sólidos frecuentes", tipos: ["Mama", "Pulmón", "Próstata"] },
     { nombre: "Cánceres hematológicos", tipos: ["Linfoma", "Mieloma múltiple", "Leucemia"] },
+    { nombre: "Tumores digestivos", tipos: ["Gástrico", "Colorrectal"] },
+    { nombre: "Piel y genitourinario", tipos: ["Melanoma", "Renal"] },
   ];
 
   function categoriaDe(tipoCancer) {
@@ -18,18 +20,22 @@ const Patologias = (() => {
 
 const EstudiosStore = (() => {
   const STORAGE_KEY = "loz_estudios_v1";
+  const SEED_VERSION_KEY = "loz_estudios_seed_version";
+  const SEED_VERSION = "regional-2026-08-05";
   const SEED_URL = "./data/estudios.json";
 
   async function seedFromFile() {
     const res = await fetch(SEED_URL);
     const datos = await res.json();
     localStorage.setItem(STORAGE_KEY, JSON.stringify(datos));
+    localStorage.setItem(SEED_VERSION_KEY, SEED_VERSION);
     return datos;
   }
 
   async function getAll() {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) {
+    const version = localStorage.getItem(SEED_VERSION_KEY);
+    if (raw && version === SEED_VERSION) {
       try {
         return JSON.parse(raw);
       } catch {
@@ -46,6 +52,7 @@ const EstudiosStore = (() => {
 
   function saveAll(estudios) {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(estudios));
+    localStorage.setItem(SEED_VERSION_KEY, SEED_VERSION);
   }
 
   async function upsert(estudio) {
