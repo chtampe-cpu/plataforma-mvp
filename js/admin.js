@@ -2,6 +2,8 @@ const ESTADO_LABEL_ADMIN = { abierto: "Abierto", pausado: "Pausado", cerrado: "C
 const ADMIN_USER = "admin";
 const ADMIN_PASS = "qaz493500";
 const ADMIN_SESSION_KEY = "loz_admin_session_v1";
+let adminInicializado = false;
+let consentimientosCache = [];
 
 function mostrarToast(mensaje) {
   const toast = document.getElementById("toast");
@@ -18,7 +20,7 @@ function mostrarPanel() {
   document.getElementById("admin-login").hidden = true;
   document.getElementById("admin-app").hidden = false;
   document.getElementById("btn-logout").hidden = false;
-  initAdmin();
+  if (!adminInicializado) initAdmin();
 }
 
 function cerrarSesion() {
@@ -110,6 +112,7 @@ async function renderTablaEstudios() {
     <tr>
       <td>${e.titulo}</td>
       <td>${e.tipoCancer}</td>
+      <td>${Patologias.categoriaDe(e.tipoCancer)}</td>
       <td><span class="status-pill status-${e.estado}">${ESTADO_LABEL_ADMIN[e.estado] || e.estado}</span></td>
       <td>${e.comuna}</td>
       <td>${e.actualizado}</td>
@@ -144,27 +147,91 @@ async function renderTablaEstudios() {
   });
 }
 
-function renderTablaPostulaciones() {
-  const registros = ConsentimientosStore.getAll();
-  const tbody = document.getElementById("tabla-postulaciones");
-  if (!registros.length) {
-    tbody.innerHTML = `<tr><td colspan="5" style="color:var(--ink-faint);">Aún no hay postulaciones registradas.</td></tr>`;
+function renderMetricas() {
+  const resumen = AnalyticsStore.resumen();
+  document.getElementById("metric-visitas").textContent = resumen.visitas;
+  document.getElementById("metric-sesiones").textContent = resumen.sesiones;
+  document.getElementById("metric-fichas").textContent = resumen.vistasEstudio;
+  document.getElementById("metric-consentimientos").textContent = ConsentimientosStore.getAll().length;
+}
+
+function renderTablaEventos() {
+  const eventos = AnalyticsStore.getAll().slice(0, 12);
+  const tbody = document.getElementById("tabla-eventos");
+  if (!eventos.length) {
+    tbody.innerHTML = `<tr><td colspan="3" style="color:var(--ink-faint);">Aún no hay eventos registrados.</td></tr>`;
     return;
   }
-  tbody.innerHTML = registros.map((r) => `
+  tbody.innerHTML = eventos.map((e) => `
     <tr>
-      <td>${r.folio}</td>
-      <td>${r.estudioTitulo}</td>
-      <td>${r.nombre}</td>
-      <td>${r.relacion === "familiar" ? "Familiar / cuidador" : "Paciente"}</td>
-      <td>${r.fecha} ${r.hora}</td>
+      <td>${e.tipo}</td>
+      <td>${e.ruta}</td>
+      <td>${new Date(e.fecha).toLocaleString("es-CL")}</td>
     </tr>
   `).join("");
 }
 
+function abrirConsentimiento(folio) {
+  const registro = consentimientosCache.find((r) => r.folio === folio);
+  if (!registro) return;
+  const detalle = document.getElementById("detalle-consentimiento-admin");
+  detalle.innerHTML = `
+    <div class="consent-record-grid">
+      <div><span>Folio</span><strong>${registro.folio}</strong></div>
+      <div><span>Fecha y hora</span><strong>${registro.fecha} ${registro.hora}</strong></div>
+      <div><span>Firmante</span><strong>${registro.nombre}</strong></div>
+      <div><span>RUT</span><strong>${registro.rut}</strong></div>
+      <div><span>Relación</span><strong>${registro.relacion === "familiar" ? "Familiar / cuidador" : "Paciente"}</strong></div>
+      <div><span>IP registrada</span><strong>${registro.ip}</strong></div>
+    </div>
+    <div class="consent-record-study">
+      <span>Estudio</span>
+      <strong>${registro.estudioTitulo}</strong>
+    </div>
+    <div class="signature-preview">
+      <span>Firma digital</span>
+      <img src="${registro.firma}" alt="Firma digital del consentimiento ${registro.folio}">
+    </div>
+    <p class="consent-meta">User-agent: ${registro.userAgent || "no disponible"}</p>
+  `;
+  document.getElementById("modal-consentimiento-admin").hidden = false;
+}
+
+function renderTablaPostulaciones() {
+  consentimientosCache = ConsentimientosStore.getAll();
+  const tbody = document.getElementById("tabla-postulaciones");
+  if (!consentimientosCache.length) {
+    tbody.innerHTML = `<tr><td colspan="7" style="color:var(--ink-faint);">Aún no hay consentimientos registrados.</td></tr>`;
+    return;
+  }
+  tbody.innerHTML = consentimientosCache.map((r) => `
+    <tr>
+      <td>${r.folio}</td>
+      <td>${r.estudioTitulo}</td>
+      <td>${r.nombre}<br><small>${r.relacion === "familiar" ? "Familiar / cuidador" : "Paciente"}</small></td>
+      <td>${r.rut}</td>
+      <td>${r.fecha} ${r.hora}</td>
+      <td>${r.ip}</td>
+      <td><button class="icon-btn" data-consentimiento="${r.folio}">Ver firma</button></td>
+    </tr>
+  `).join("");
+
+  tbody.querySelectorAll("[data-consentimiento]").forEach((btn) => {
+    btn.addEventListener("click", () => abrirConsentimiento(btn.dataset.consentimiento));
+  });
+}
+
 function initAdmin() {
+  adminInicializado = true;
+  AnalyticsStore.track("page_view", { pagina: "admin" });
+  renderMetricas();
   renderTablaEstudios();
   renderTablaPostulaciones();
+  renderTablaEventos();
+
+  document.getElementById("btn-cerrar-consentimiento-admin").addEventListener("click", () => {
+    document.getElementById("modal-consentimiento-admin").hidden = true;
+  });
 
   document.getElementById("btn-nuevo").addEventListener("click", () => {
     limpiarFormulario();
