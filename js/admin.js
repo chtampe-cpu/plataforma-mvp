@@ -1,10 +1,60 @@
 const ESTADO_LABEL_ADMIN = { abierto: "Abierto", pausado: "Pausado", cerrado: "Cerrado" };
+const ADMIN_USER = "admin";
+const ADMIN_PASS = "qaz493500";
+const ADMIN_SESSION_KEY = "loz_admin_session_v1";
 
 function mostrarToast(mensaje) {
   const toast = document.getElementById("toast");
   toast.textContent = mensaje;
   toast.classList.add("show");
   setTimeout(() => toast.classList.remove("show"), 2200);
+}
+
+function estaAutenticado() {
+  return sessionStorage.getItem(ADMIN_SESSION_KEY) === "activa";
+}
+
+function mostrarPanel() {
+  document.getElementById("admin-login").hidden = true;
+  document.getElementById("admin-app").hidden = false;
+  document.getElementById("btn-logout").hidden = false;
+  initAdmin();
+}
+
+function cerrarSesion() {
+  sessionStorage.removeItem(ADMIN_SESSION_KEY);
+  window.location.reload();
+}
+
+function initLogin() {
+  const formLogin = document.getElementById("form-login");
+  const error = document.getElementById("login-error");
+
+  document.getElementById("btn-logout").addEventListener("click", cerrarSesion);
+
+  if (estaAutenticado()) {
+    mostrarPanel();
+    return;
+  }
+
+  document.getElementById("login-usuario").focus();
+  formLogin.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const usuario = document.getElementById("login-usuario").value.trim();
+    const clave = document.getElementById("login-clave").value;
+
+    if (usuario === ADMIN_USER && clave === ADMIN_PASS) {
+      sessionStorage.setItem(ADMIN_SESSION_KEY, "activa");
+      error.hidden = true;
+      mostrarPanel();
+      mostrarToast("Sesión iniciada");
+      return;
+    }
+
+    error.hidden = false;
+    document.getElementById("login-clave").value = "";
+    document.getElementById("login-clave").focus();
+  });
 }
 
 function limpiarFormulario() {
@@ -152,4 +202,4 @@ function initAdmin() {
   });
 }
 
-initAdmin();
+initLogin();
