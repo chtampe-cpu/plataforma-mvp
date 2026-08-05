@@ -16,26 +16,64 @@
 <header class="app-header">
   <div class="header-inner">
     <a class="brand" href="./index.html">
-      <span class="mark">La Voz de los Pacientes</span>
-      <span class="tagline">Estudios clínicos</span>
+      <span class="brand-mark" aria-hidden="true">LV</span>
+      <span class="brand-copy">
+        <span class="mark">La Voz de los Pacientes</span>
+        <span class="tagline">Estudios clínicos</span>
+      </span>
     </a>
     <a class="btn btn-ghost" href="./admin.html" style="min-height:38px; padding:0.4rem 0.8rem; font-size:0.82rem;">Administración</a>
   </div>
 </header>
 
-<main class="container">
+<main class="container catalog-container">
   <div id="install-banner" class="install-banner">
     <span>Instala esta app en tu celular para acceder más rápido.</span>
     <button id="btn-instalar" class="btn btn-primary" style="min-height:36px; padding:0.4rem 0.9rem; font-size:0.82rem;">Instalar</button>
   </div>
 
-  <span class="eyebrow">Fundación La Voz de los Pacientes Chile</span>
-  <h1>Estudios clínicos oncológicos disponibles</h1>
-  <p class="lede">Busca por tipo de cáncer o ubicación. Al postular a un estudio te pediremos revisar y firmar un consentimiento informado.</p>
+  <section class="catalog-hero" aria-labelledby="catalog-title">
+    <div class="hero-copy">
+      <span class="eyebrow">Fundación La Voz de los Pacientes Chile</span>
+      <h1 id="catalog-title">Encuentra estudios clínicos oncológicos disponibles</h1>
+      <p class="lede">Filtra por diagnóstico, comuna y estado de reclutamiento. Revisa requisitos y postula con consentimiento informado digital.</p>
+      <div class="hero-actions">
+        <a class="btn btn-accent" href="#grilla-estudios">Ver estudios</a>
+        <a class="btn btn-ghost" href="./estudio.html?id=est-001&demo=postular">Demo postulación</a>
+      </div>
+    </div>
+    <div class="hero-panel" aria-label="Resumen del catálogo">
+      <div class="hero-panel-top">
+        <span class="pulse-dot"></span>
+        <span>Catálogo activo</span>
+      </div>
+      <div class="hero-panel-main" id="hero-total">6</div>
+      <div class="hero-panel-label">estudios cargados</div>
+      <div class="hero-mini-grid">
+        <div><strong id="hero-abiertos">0</strong><span>abiertos</span></div>
+        <div><strong id="hero-comunas">0</strong><span>comunas</span></div>
+      </div>
+    </div>
+  </section>
 
-  <form class="filters" id="filtros" autocomplete="off">
+  <section class="stats-row" aria-label="Indicadores del catálogo">
+    <div class="stat-card">
+      <span class="stat-label">Reclutando</span>
+      <strong id="stat-abiertos">0</strong>
+    </div>
+    <div class="stat-card">
+      <span class="stat-label">Tipos de cáncer</span>
+      <strong id="stat-cancer">0</strong>
+    </div>
+    <div class="stat-card">
+      <span class="stat-label">Centros</span>
+      <strong id="stat-centros">0</strong>
+    </div>
+  </section>
+
+  <form class="filters filters-panel" id="filtros" autocomplete="off">
     <div class="search-box">
-      <input type="search" id="buscar" placeholder="Buscar por nombre del estudio…" aria-label="Buscar estudio">
+      <input type="search" id="buscar" placeholder="Buscar por estudio, cáncer o centro…" aria-label="Buscar estudio">
     </div>
     <div class="filter-row">
       <div class="field">
@@ -61,10 +99,17 @@
     </div>
   </form>
 
-  <p class="result-count" id="contador-resultados"></p>
+  <div class="section-heading">
+    <div>
+      <span class="eyebrow">Resultados</span>
+      <h2>Estudios para revisar</h2>
+    </div>
+    <p class="result-count" id="contador-resultados"></p>
+  </div>
   <div class="study-grid" id="grilla-estudios"></div>
   <div class="empty-state" id="estado-vacio" hidden>
     <p>No encontramos estudios con esos filtros.</p>
+    <button class="btn btn-ghost" type="button" id="btn-limpiar-filtros">Limpiar filtros</button>
   </div>
 </main>
 
