@@ -21,7 +21,7 @@ const Patologias = (() => {
 const EstudiosStore = (() => {
   const STORAGE_KEY = "loz_estudios_v1";
   const SEED_VERSION_KEY = "loz_estudios_seed_version";
-  const SEED_VERSION = "regional-validado-2026-08-05";
+  const SEED_VERSION = "chile-only-2026-08-05";
   const SEED_URL = "./data/estudios.json";
 
   async function seedFromFile() {
