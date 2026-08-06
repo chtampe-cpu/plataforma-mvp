@@ -50,15 +50,15 @@ function iniciales(valor) {
 function actualizarResumen() {
   const abiertos = estudiosCache.filter((e) => e.estado === "abierto").length;
   const tipos = new Set(estudiosCache.map((e) => e.tipoCancer)).size;
-  const paises = new Set(estudiosCache.map((e) => e.pais || "Chile")).size;
+  const centros = new Set(estudiosCache.map((e) => e.centro)).size;
 
   const valores = {
     "hero-total": estudiosCache.length,
     "hero-abiertos": abiertos,
-    "hero-paises": paises,
+    "hero-centros": centros,
     "stat-abiertos": abiertos,
     "stat-cancer": tipos,
-    "stat-paises": paises,
+    "stat-centros": centros,
   };
 
   Object.entries(valores).forEach(([id, valor]) => {
@@ -76,15 +76,14 @@ function renderCategorias() {
   const categorias = Patologias.todas().map((categoria) => {
     const estudios = estudiosCache.filter((e) => categoria.tipos.includes(e.tipoCancer));
     const abiertos = estudios.filter((e) => e.estado === "abierto").length;
-    const paises = new Set(estudios.map((e) => e.pais || "Chile")).size;
-    return { ...categoria, total: estudios.length, abiertos, paises };
+    return { ...categoria, total: estudios.length, abiertos };
   }).filter((c) => c.total > 0);
 
   contenedor.innerHTML = categorias.map((c) => `
     <button class="category-card" type="button" data-categoria="${c.nombre}">
       <span>${c.nombre}</span>
       <strong>${c.total}</strong>
-      <small>${c.abiertos} reclutando · ${c.paises} países · ${c.tipos.join(", ")}</small>
+      <small>${c.abiertos} reclutando · ${c.tipos.join(", ")}</small>
     </button>
   `).join("");
 
@@ -102,11 +101,10 @@ function renderCategorias() {
 
 function crearTarjeta(estudio) {
   const categoria = Patologias.categoriaDe(estudio.tipoCancer);
-  const pais = estudio.pais || "Chile";
   const a = document.createElement("a");
   a.className = `study-card study-card-${estudio.estado}`;
   a.href = `./estudio.html?id=${encodeURIComponent(estudio.id)}`;
-  a.addEventListener("click", () => AnalyticsStore.track("study_click", { estudioId: estudio.id, estudioTitulo: estudio.titulo, pais }));
+  a.addEventListener("click", () => AnalyticsStore.track("study_click", { estudioId: estudio.id, estudioTitulo: estudio.titulo }));
   a.innerHTML = `
     <div class="card-visual" aria-hidden="true">
       <span>${iniciales(estudio.tipoCancer)}</span>
@@ -115,13 +113,13 @@ function crearTarjeta(estudio) {
       <span class="status-pill status-${estudio.estado}">${ESTADO_LABEL[estudio.estado] || estudio.estado}</span>
       <span class="card-phase">${estudio.fase}</span>
     </div>
-    <span class="category-tag">${categoria} · ${pais}</span>
+    <span class="category-tag">${categoria}</span>
     <h3>${estudio.titulo}</h3>
     <p class="card-description">${estudio.descripcionBreve}</p>
     <div class="card-meta-list">
       <div><span>Diagnóstico</span><strong>${estudio.tipoCancer}</strong></div>
       <div><span>Centro</span><strong>${estudio.centro}</strong></div>
-      <div><span>Ubicación</span><strong>${estudio.comuna}, ${pais}</strong></div>
+      <div><span>Ubicación</span><strong>${estudio.comuna}</strong></div>
     </div>
     <div class="card-footer">
       <span>${ESTADO_HINT[estudio.estado] || "Revisar estado"}</span>
@@ -133,17 +131,14 @@ function crearTarjeta(estudio) {
 
 function aplicarFiltros() {
   const texto = document.getElementById("buscar").value.trim().toLowerCase();
-  const paisFiltro = document.getElementById("filtro-pais").value;
   const cancer = document.getElementById("filtro-cancer").value;
   const comuna = document.getElementById("filtro-comuna").value;
 
   const filtrados = estudiosCache.filter((e) => {
-    const pais = e.pais || "Chile";
-    const campos = [e.titulo, e.tipoCancer, Patologias.categoriaDe(e.tipoCancer), e.centro, e.comuna, pais, e.descripcionBreve]
+    const campos = [e.titulo, e.tipoCancer, Patologias.categoriaDe(e.tipoCancer), e.centro, e.comuna, e.descripcionBreve]
       .join(" ")
       .toLowerCase();
     if (!estadosActivos.has(e.estado)) return false;
-    if (paisFiltro && pais !== paisFiltro) return false;
     if (cancer && e.tipoCancer !== cancer) return false;
     if (comuna && e.comuna !== comuna) return false;
     if (texto && !campos.includes(texto)) return false;
@@ -163,7 +158,6 @@ function aplicarFiltros() {
 
 function limpiarFiltros() {
   document.getElementById("buscar").value = "";
-  document.getElementById("filtro-pais").value = "";
   document.getElementById("filtro-cancer").value = "";
   document.getElementById("filtro-comuna").value = "";
   estadosActivos = new Set(["abierto", "pausado"]);
@@ -178,12 +172,10 @@ async function init() {
   estudiosCache = await EstudiosStore.getAll();
 
   actualizarResumen();
-  poblarSelect(document.getElementById("filtro-pais"), [...new Set(estudiosCache.map((e) => e.pais || "Chile"))].sort());
   poblarSelectCategorias(document.getElementById("filtro-cancer"), estudiosCache);
   poblarSelect(document.getElementById("filtro-comuna"), [...new Set(estudiosCache.map((e) => e.comuna))].sort());
 
   document.getElementById("buscar").addEventListener("input", aplicarFiltros);
-  document.getElementById("filtro-pais").addEventListener("change", aplicarFiltros);
   document.getElementById("filtro-cancer").addEventListener("change", aplicarFiltros);
   document.getElementById("filtro-comuna").addEventListener("change", aplicarFiltros);
   document.getElementById("btn-limpiar-filtros")?.addEventListener("click", limpiarFiltros);
